@@ -4,8 +4,8 @@ import os
 
 @available(iOS 12.0, *)
 @available(OSX 10.14, *)
-extension ADChronicle {
-    private func string(from json: [String: Any]) -> String {
+public extension ADChronicle {
+    func string(from json: [String: Any]) -> String {
         guard JSONSerialization.isValidJSONObject(json),
             let jsonData = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted),
             let jsonString = String(data: jsonData, encoding: .utf8)
@@ -25,16 +25,16 @@ extension ADChronicle {
 // MARK: Loggers
 @available(iOS 12.0, *)
 @available(OSX 10.14, *)
-extension ADChronicle {
-    private func filename(from file: StaticString) -> String {
+public extension ADChronicle {
+    func filename(from file: StaticString) -> String {
         return URL(fileURLWithPath: file.description).deletingPathExtension().lastPathComponent
     }
     
-    private func logger(for file: StaticString) -> OSLog {
+    func logger(for file: StaticString) -> OSLog {
         return logger(subsystem: Bundle.main.bundleIdentifier!, file: file)
     }
     
-    private func logger(subsystem: String, file: StaticString) -> OSLog {
+    func logger(subsystem: String, file: StaticString) -> OSLog {
         return OSLog(subsystem: subsystem, category: filename(from: file))
     }
 }
